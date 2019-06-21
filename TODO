@@ -1,0 +1,5 @@
+* kmw, 2019-06-19: Add test in bglOpen to ensure that the pathname being passed 
+  to it resolves to something other than a directory.  In theory we could check 
+  that it is indeed a regular file, but someone somewhere may find a use in 
+  passing it a FIFO or device or something and that's not inherently a problem 
+  (we verify that the data is in the proper format anyway.
