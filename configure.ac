@@ -19,4 +19,4 @@ AC_PROG_CC
 
 # Checks for library functions.
 
-AC_OUTPUT(Makefile src/Makefile)
+AC_OUTPUT(Makefile src/Makefile utils/Makefile)

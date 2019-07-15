@@ -3,3 +3,6 @@
   that it is indeed a regular file, but someone somewhere may find a use in 
   passing it a FIFO or device or something and that's not inherently a problem 
   (we verify that the data is in the proper format anyway.
+  
+* kmw, 2019-06-20: Add some way to specify function/file/line/whatever in error
+  calls

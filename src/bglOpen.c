@@ -19,7 +19,7 @@
 bglFile *bglOpen(const char *path){
 	bglFile *bf;
 	
-	bf = malloc(sizeof(bglFile));
+	bf = (bglFile *)malloc(sizeof(bglFile));
 	
 	if (!bf){
 		switch (errno){
@@ -88,6 +88,8 @@ bglFile *bglOpen(const char *path){
 	_bglReadRawHeader(bf, &(bf->rawHeader));	// it is not an error to have an invalid header; conceivably, someone might use this
 							// library as part of a utility to examine and fix corrupted BGL files, for example
 							// we do check for validity and set a flag, however
+	
+	bf->validHeader = UNSET;
 	
 	return bf;
 }

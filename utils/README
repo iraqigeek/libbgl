@@ -1,0 +1,6 @@
+Files in here are utilities for demonstration and testing purposes.  They often
+do things you should not do in real programs, such as access libbgl internals.
+This is done for testing purposes only.  Some other programs in here are
+legitimate demonstrations and examples.  Right now it's up to you to use your
+best judgment to figure out which is which.  Eventually I'll get bored and make
+the distinction more clear.
