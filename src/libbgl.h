@@ -35,11 +35,20 @@ typedef struct _bglRawHeader{
 	uint32_t qmid[8];
 } _bglRawHeader;
 
+typedef struct _bglSection{
+	bglSectionTypes type;
+	uint32_t sizeConst;
+	uint32_t numSubSections;
+	uint32_t fileOffset;
+	uint32_t totalSubSectionSize;
+} _bglSection;
+
 typedef struct bglFile {
 	char *filePath;
 	int fd;
 	_bglRawHeader rawHeader;
 	triBool validHeader;
+	_bglSection *sections;
 } bglFile;
 
 // error information

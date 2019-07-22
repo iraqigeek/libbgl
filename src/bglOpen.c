@@ -90,6 +90,7 @@ bglFile *bglOpen(const char *path){
 							// we do check for validity and set a flag, however
 	
 	bf->validHeader = UNSET;
+	bf->sections = NULL;
 	
 	return bf;
 }
