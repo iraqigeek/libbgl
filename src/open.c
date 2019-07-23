@@ -7,6 +7,8 @@
 #ifndef _BGLOPEN_C
 #define _BGLOPEN_C
 
+#define _LIBBGL_SOURCE
+
 #include <errno.h>
 #include <fcntl.h>
 #include <stdlib.h>
@@ -52,8 +54,8 @@ bglFile *bglOpen(const char *path){
 	
 	strcpy(bf->filePath, path);	
 	
-	bf->fd = open(path, O_RDONLY);
-	if (bf->fd == -1){
+	bf->fh = fopen(path, "r");
+	if (!bf->fh){
 		switch (errno){
 			case EACCES:
 				_bglSetError(BGL_ERROR_PERMISSION);

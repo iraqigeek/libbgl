@@ -4,17 +4,18 @@
  * Social Justice License.  See COPYING for details.                         *
  *****************************************************************************/
 
-#ifndef _BGLERROR_C
-#define _BGLERROR_C
+#ifndef _BGLSECTION_C
+#define _BGLSECTION_C
 
 #define _LIBBGL_SOURCE
 
 #include <libbgl.h>
 
-bglErrors bglErrno;
-
-void _bglSetError(bglErrors error){
-	bglErrno = error;
+unsigned int bglEnumerateSections(bglFile *bf){
+	uint32_t numSections;
+	
+	for (numSections = 0; numSections < bf->rawHeader.numSections; numSections++){
+	}
 }
 
 #endif

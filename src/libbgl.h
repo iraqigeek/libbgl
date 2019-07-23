@@ -9,8 +9,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
-#include <sys/types.h>
-#include <unistd.h>
+#include <stdio.h>
 
 typedef enum triBool {			// be careful, because a non-zero value does not necessarily semantically mean "true" with this
 	UNSET = -1,			// best to always check for values explicitly, just to keep it at the front of your mind
@@ -22,7 +21,11 @@ typedef enum bglSectionTypes {
 	BGL_SECTION_NONE = 0x0,
 	BGL_SECTION_COPYRIGHT = 0x1,
 	BGL_SECTION_GUID = 0x2,
-	BGL_SECTION_AIRPORT = 0x13
+	BGL_SECTION_AIRPORT = 0x3,
+	BGL_SECTION_ILSVOR = 0x13,
+	BGL_SECTION_NDB = 0x17,
+	BGL_SECTION_MARKER = 0x18,
+	BGL_SECTION_BOUNDARY = 0x20
 } bglSectionTypes;
 
 typedef struct _bglRawHeader{
@@ -35,17 +38,25 @@ typedef struct _bglRawHeader{
 	uint32_t qmid[8];
 } _bglRawHeader;
 
+typedef union _bglSubSection{
+	int a;
+	short b;
+} _bglSubSection;
+
 typedef struct _bglSection{
 	bglSectionTypes type;
 	uint32_t sizeConst;
 	uint32_t numSubSections;
 	uint32_t fileOffset;
 	uint32_t totalSubSectionSize;
+	_bglSubSection *subSections;
 } _bglSection;
+
+typedef _bglSection bglSection;
 
 typedef struct bglFile {
 	char *filePath;
-	int fd;
+	FILE *fh;
 	_bglRawHeader rawHeader;
 	triBool validHeader;
 	_bglSection *sections;
@@ -64,11 +75,16 @@ typedef enum bglErrors {
 // public functions
 bglFile *bglOpen(const char *path);
 bool bglValidateHeader(bglFile *bf);
+unsigned int bglEnumerateSections(bglFile *bf);		// return value is # of sections
 
 // internal-use-only functions
+
+#ifdef _LIBBGL_SOURCE
 ssize_t _bglReadBytes(bglFile *file, unsigned long start, unsigned long count, void *buffer);
 unsigned int _bglReadRawHeader(bglFile *file, _bglRawHeader *header);
 void _bglSetError(bglErrors error);
-off_t _bglSetFileOffset(bglFile *file, off_t offset);
+int _bglSetFileOffset(bglFile *file, long offset);
+//off_t _bgl
+#endif
 
 #endif

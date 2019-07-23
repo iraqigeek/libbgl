@@ -7,6 +7,8 @@
 #ifndef _BGLHEADER_C
 #define _BGLHEADER_C
 
+#define _LIBBGL_SOURCE
+
 #include <errno.h>
 #include <stdbool.h>
 #include <stdint.h>

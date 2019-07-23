@@ -7,15 +7,17 @@
 #ifndef _BGLFILEOPS_C
 #define _BGLFILEOPS_C
 
+#define _LIBBGL_SOURCE
+
 #include <errno.h>
 #include <sys/types.h>
 #include <unistd.h>
 
 #include <libbgl.h>
 
-off_t _bglSetFileOffset(bglFile *file, off_t offset){
-	off_t o;
-	o = lseek(file->fd, offset, SEEK_SET);
+int _bglSetFileOffset(bglFile *file, long offset){
+	int o;
+	o = fseek(file->fh, offset, SEEK_SET);
 	
 	if (o == -1){
 		_bglSetError(BGL_ERROR_INTERNALFILE);
@@ -28,11 +30,11 @@ off_t _bglSetFileOffset(bglFile *file, off_t offset){
 ssize_t _bglReadBytes(bglFile *file, size_t start, size_t count, void *buffer){
 	ssize_t ret;
 	
-	if (_bglSetFileOffset(file, (off_t) start) == -1){
+	if (_bglSetFileOffset(file, (long) start) == -1){
 		return -1;
 	}
 	
-	ret = read(file->fd, buffer, count);
+	ret = fread(buffer, count, 1, file->fh);
 	
 	if (ret == -1){
 		_bglSetError(BGL_ERROR_INTERNALFILE);

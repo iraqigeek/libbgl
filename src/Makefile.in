@@ -130,7 +130,8 @@ am__uninstall_files_from_dir = { \
 am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(includedir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
 libbgl_la_LIBADD =
-am_libbgl_la_OBJECTS = error.lo fileOps.lo header.lo open.lo
+am_libbgl_la_OBJECTS = error.lo fileOps.lo header.lo open.lo \
+	section.lo
 libbgl_la_OBJECTS = $(am_libbgl_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -321,7 +322,8 @@ lib_LTLIBRARIES = libbgl.la
 libbgl_la_SOURCES = error.c \
 			fileOps.c \
 			header.c \
-			open.c
+			open.c \
+			section.c
 
 libbgl_la_LDFLAGS = -version-info 0:0:0
 include_HEADERS = libbgl.h
@@ -407,6 +409,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fileOps.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/header.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/open.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/section.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
