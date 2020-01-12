@@ -14,7 +14,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#include <libbgl.h>
+#include "libbgl.h"
 
 const short BGL_HEADER_SIZE = 56;
 
@@ -48,6 +48,8 @@ unsigned int _bglReadRawHeader(bglFile *file, _bglRawHeader *header){
 	for (i = 0; i < 8; i++){
 		header->qmid[i] = *((uint32_t *)&buf[24 + (i * 4)]);
 	}
+	
+	free(buf);
 	
 	return 1;
 }

@@ -13,7 +13,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include <libbgl.h>
+#include "libbgl.h"
 
 int _bglSetFileOffset(bglFile *file, long offset){
 	int o;

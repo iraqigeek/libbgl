@@ -9,12 +9,18 @@
 
 #define _LIBBGL_SOURCE
 
-#include <libbgl.h>
+#include "libbgl.h"
 
 bglErrors bglErrno;
 
 void _bglSetError(bglErrors error){
 	bglErrno = error;
+}
+
+void bglClearError(){
+	bglErrno = BGL_ERROR_CLEAR;
+	
+	return;
 }
 
 #endif

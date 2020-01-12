@@ -16,7 +16,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#include <libbgl.h>
+#include "libbgl.h"
 
 bglFile *bglOpen(const char *path){
 	bglFile *bf;

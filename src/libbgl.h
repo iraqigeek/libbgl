@@ -25,7 +25,23 @@ typedef enum bglSectionTypes {
 	BGL_SECTION_ILSVOR = 0x13,
 	BGL_SECTION_NDB = 0x17,
 	BGL_SECTION_MARKER = 0x18,
-	BGL_SECTION_BOUNDARY = 0x20
+	BGL_SECTION_BOUNDARY = 0x20,
+	BGL_SECTION_WAYPOITN = 0x22,
+	BGL_SECTION_GEOPOL = 0x23,
+	BGL_SECTION_SCENERYOBJECT = 0x25,
+	BGL_SECTION_NAMELIST = 0x27,
+	BGL_SECTION_VORILSICAOINDEX = 0x28,
+	BGL_SECTION_NDBICAOINDEX = 0x29,
+	BGL_SECTION_WAYPOINTICAOINDEX = 0x2A,
+	BGL_SECTION_MODELDATA = 0x2B,
+	BGL_SECTION_AIRPORTSUMMARY = 0x2C,
+	BGL_SECTION_EXCLUSION = 0x2E,
+	BGL_SECTION_TIMEZONE = 0x2F,
+	BGL_SECTION_TERRAINVECTORDB = 0x65,
+	BGL_SECTION_TERRAINELEVATION = 0x67,
+	BGL_SECTION_TERRAINLANDCLASS = 0x68,
+	BGL_SECTION_TERRAINWATERCLASS = 0x69,
+	BGL_SECTION_TERRAINREGION = 0x6A
 } bglSectionTypes;
 
 typedef struct _bglRawHeader{
@@ -50,6 +66,7 @@ typedef struct _bglSection{
 	uint32_t fileOffset;
 	uint32_t totalSubSectionSize;
 	_bglSubSection *subSections;
+	unsigned long sectionNumber;
 } _bglSection;
 
 typedef _bglSection bglSection;
@@ -64,6 +81,7 @@ typedef struct bglFile {
 
 // error information
 typedef enum bglErrors {
+	BGL_ERROR_CLEAR = 0,
 	BGL_ERROR_UNKNOWN,
 	BGL_ERROR_OOM,
 	BGL_ERROR_PERMISSION,
@@ -75,7 +93,16 @@ typedef enum bglErrors {
 // public functions
 bglFile *bglOpen(const char *path);
 bool bglValidateHeader(bglFile *bf);
-unsigned int bglEnumerateSections(bglFile *bf);		// return value is # of sections
+unsigned long bglCountSections(bglFile *bf);	// return value is # of sections
+
+/*
+ * void bglClearError()
+ * ARGUMENTS: <none>
+ * RETURN: <none>
+ * USE: To clear the libbgl error state.  Use before every libbgl function call
+ * for which you are interested in checking whether an error occurred.
+ */
+void bglClearError();
 
 // internal-use-only functions
 
@@ -84,7 +111,9 @@ ssize_t _bglReadBytes(bglFile *file, unsigned long start, unsigned long count, v
 unsigned int _bglReadRawHeader(bglFile *file, _bglRawHeader *header);
 void _bglSetError(bglErrors error);
 int _bglSetFileOffset(bglFile *file, long offset);
-//off_t _bgl
+unsigned long _bglSectionHeaderOffset(unsigned long sectionNumber);
+
+void _bglReserveSectionsSpace(bglFile *bf);
 #endif
 
 #endif
