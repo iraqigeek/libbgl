@@ -1,2 +1,6 @@
+2020-01-16
+	* added bglCountSectionsByType and bglGetSectionsByType functions (kmw)
+	* created libbgl-sectioninfo utility (kmw)
+
 2020-01-12
-	* changed bglEnumerateSections to bglCountSections
+	* changed bglEnumerateSections to bglCountSections (kmw)

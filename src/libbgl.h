@@ -93,16 +93,41 @@ typedef enum bglErrors {
 // public functions
 bglFile *bglOpen(const char *path);
 bool bglValidateHeader(bglFile *bf);
-unsigned long bglCountSections(bglFile *bf);	// return value is # of sections
 
 /*
  * void bglClearError()
  * ARGUMENTS: <none>
- * RETURN: <none>
- * USE: To clear the libbgl error state.  Use before every libbgl function call
- * for which you are interested in checking whether an error occurred.
+ * RETURN:    <none>
+ * USE:       To clear the libbgl error state.  Use before every libbgl function call
+ *            for which you are interested in checking whether an error occurred.
  */
 void bglClearError();
+
+/*
+ * unsigned long bglCountSections(bglFile *bf)
+ * ARGUMENTS: bglFile *bf - pointer to a bglFile object opened with bglOpen()
+ * RETURN:    unsigned long - number of BGL sections in bglFile
+ * USE:       To discover how many BGL sections a given BGL file contains
+ */
+unsigned long bglCountSections(bglFile *bf);	// return value is # of sections
+
+/*
+ * unsigned long bglCountSectionsByType(bglFile *bf, bglSectionTypes type)
+ * ARGUMENTS: bglFile *bf - pointer to a bglFile object opened with bglOpen()
+ *            bglSectionTypes type - section type of interest
+ * RETURN:    unsigned long - number of BGL sections of specified type in bglFile
+ * USE:       TO discover how many BGL sections of a given type a given BGL file contains
+ */
+unsigned long bglCountSectionsByType(bglFile *bf, bglSectionTypes type);
+
+/*
+ * bglSection **bglGetSectionsByType(bglFile *bf, bglSectionTypes type)
+ * ARGUMENTS: bglFile *bf - pointer to a bglFile object opened with bglOpen()
+ *            bglSectionTypes type - type of BGL section to return in an array
+ * RETURN:    bglSection ** - array of pointers to every section of requested type in bglFile
+ * USE:       To obtain references to every BGL section of a given type in a given BGL section
+ */
+bglSection **bglGetSectionsByType(bglFile *bf, bglSectionTypes type);
 
 // internal-use-only functions
 
@@ -113,6 +138,7 @@ void _bglSetError(bglErrors error);
 int _bglSetFileOffset(bglFile *file, long offset);
 unsigned long _bglSectionHeaderOffset(unsigned long sectionNumber);
 
+void _bglReadSectionHeaders(bglFile *bf);
 void _bglReserveSectionsSpace(bglFile *bf);
 #endif
 
